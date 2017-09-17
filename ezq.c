@@ -64,6 +64,20 @@ void priorityEnqueue(Queue* queue, void* data)
 		queue->front = new_node;
 		queue->back = queue->front;
 	}
+	else if(queue->length == 0)
+	{
+		//means the queue is reset, so just normal queue instead so we don't confuse the total length
+		new_node->prev = queue->back;
+		new_node->next = queue->back->next;
+		if(queue->back->next != NULL)
+		{
+			queue->back->next->prev = new_node;
+		}
+		queue->back->next = new_node;
+		queue->back = new_node;
+		queue->front = new_node;
+		
+	}
 	else
 	{
 		new_node->prev = queue->front->prev;
@@ -80,10 +94,6 @@ void priorityEnqueue(Queue* queue, void* data)
 
 		queue->front->prev = new_node;
 		queue->front = new_node;
-		if(queue->length == 0)
-		{
-			queue->back = new_node;
-		}
 
 	}
 	queue->length++;
@@ -168,6 +178,8 @@ void cleanQueue(Queue* queue)
 			{
 				queue->free_function(queue->abs_front->data);
 			}
+			queue->abs_front->prev = NULL;
+			queue->abs_front->data = NULL;
 			free(queue->abs_front);
 			queue->abs_front = next;
 			queue->total_length--;

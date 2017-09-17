@@ -34,5 +34,6 @@ void* peekQueue(Queue* queue, int queue_location);
 void flushQueue(Queue* queue);
 void freeQueue(Queue* queue);
 void resetQueue(Queue* queue);
+void cleanQueue(Queue* queue);
 
 #endif //MATFILE_PARSING_WIN_MEX_QUEUE_H
