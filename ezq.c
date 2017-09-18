@@ -17,6 +17,7 @@ Queue* initQueue(void (* free_function)(void*))
 	{
 		new_queue->free_function = free_function;
 	}
+	return new_queue;
 }
 
 void enqueue(Queue* queue, void* data)
@@ -35,7 +36,7 @@ void enqueue(Queue* queue, void* data)
 	{
 		new_node->prev = queue->back;
 		new_node->next = queue->back->next;
-
+		
 		if(queue->back->next != NULL)
 		{
 			queue->back->next->prev = new_node;
@@ -82,7 +83,7 @@ void priorityEnqueue(Queue* queue, void* data)
 	{
 		new_node->prev = queue->front->prev;
 		new_node->next = queue->front;
-
+		
 		if(queue->front == queue->abs_front)
 		{
 			queue->abs_front = new_node;
@@ -91,10 +92,10 @@ void priorityEnqueue(Queue* queue, void* data)
 		{
 			queue->front->prev->next = new_node;
 		}
-
+		
 		queue->front->prev = new_node;
 		queue->front = new_node;
-
+		
 	}
 	queue->length++;
 	queue->total_length++;
@@ -133,9 +134,13 @@ void* peekQueue(Queue* queue, int queue_location)
 		{
 			return queue->front->data;
 		}
-		if(queue_location == QUEUE_BACK)
+		else if(queue_location == QUEUE_BACK)
 		{
 			return queue->back->data;
+		}
+		else
+		{
+			return NULL;
 		}
 	}
 	else
