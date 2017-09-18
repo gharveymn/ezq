@@ -6,6 +6,8 @@
 
 #define QUEUE_FRONT 0
 #define QUEUE_BACK 1
+#define pushQueue enqueue
+#define pullQueue dequeue
 
 typedef struct QueueNode_ QueueNode;
 struct QueueNode_

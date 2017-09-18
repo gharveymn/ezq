@@ -101,7 +101,7 @@ int main()
 	
 	for(int k = 0; k < 10; k++)
 	{
-		dequeue(queue);
+		pullQueue(queue);
 	}
 	
 	cleanQueue(queue);
