@@ -1,13 +1,8 @@
-#ifndef QUEUE_H
-#define QUEUE_H
-
-#include <stdlib.h>
-#include <stdio.h>
+#ifndef EZQ_H
+#define EZQ_H
 
 #define QUEUE_FRONT 0
 #define QUEUE_BACK 1
-#define pushQueue enqueue
-#define pullQueue dequeue
 
 typedef struct QueueNode_ QueueNode;
 struct QueueNode_
@@ -36,6 +31,7 @@ void* peekQueue(Queue* queue, int queue_location);
 void flushQueue(Queue* queue);
 void freeQueue(Queue* queue);
 void resetQueue(Queue* queue);
+void restartQueue(Queue* queue);
 void cleanQueue(Queue* queue);
 
-#endif //MATFILE_PARSING_WIN_MEX_QUEUE_H
+#endif

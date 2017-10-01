@@ -1,3 +1,4 @@
+#include "mapping.h"
 #include "ezq.h"
 
 
@@ -9,16 +10,10 @@ Queue* initQueue(void (* free_function)(void*))
 	new_queue->back = NULL;
 	new_queue->length = 0;
 	new_queue->total_length = 0;
-	if(free_function == NULL)
-	{
-		new_queue->free_function = free;
-	}
-	else
-	{
-		new_queue->free_function = free_function;
-	}
+	new_queue->free_function = free_function;
 	return new_queue;
 }
+
 
 void enqueue(Queue* queue, void* data)
 {
@@ -101,11 +96,19 @@ void priorityEnqueue(Queue* queue, void* data)
 	queue->total_length++;
 }
 
+
 void resetQueue(Queue* queue)
 {
 	queue->front = queue->back;
 	queue->length = 0;
 }
+
+void restartQueue(Queue* queue)
+{
+	queue->front = queue->abs_front;
+	queue->length = queue->total_length;
+}
+
 
 void* dequeue(Queue* queue)
 {
@@ -125,6 +128,7 @@ void* dequeue(Queue* queue)
 		return NULL;
 	}
 }
+
 
 void* peekQueue(Queue* queue, int queue_location)
 {
@@ -149,6 +153,7 @@ void* peekQueue(Queue* queue, int queue_location)
 	}
 }
 
+
 void flushQueue(Queue* queue)
 {
 	if(queue != NULL)
@@ -156,7 +161,7 @@ void flushQueue(Queue* queue)
 		while(queue->abs_front != NULL)
 		{
 			QueueNode* next = queue->abs_front->next;
-			if(queue->abs_front->data != NULL)
+			if(queue->abs_front->data != NULL && queue->free_function != NULL)
 			{
 				queue->free_function(queue->abs_front->data);
 			}
@@ -170,6 +175,7 @@ void flushQueue(Queue* queue)
 		queue->total_length = 0;
 	}
 }
+
 
 void cleanQueue(Queue* queue)
 {
@@ -191,6 +197,7 @@ void cleanQueue(Queue* queue)
 		}
 	}
 }
+
 
 void freeQueue(Queue* queue)
 {
