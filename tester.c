@@ -1,4 +1,4 @@
-#include "ezq.h"
+#include "src/headers/ezq.h"
 
 
 #define arr_sz 10000
@@ -7,7 +7,7 @@ typedef struct
 	int* vvv_big_array;
 } Object;
 
-void makeObj(Object* obj);
+Object* makeObj(void);
 void initObj(Object* obj);
 void freeObj(void* o);
 
@@ -19,27 +19,22 @@ int main()
 	
 	for(int i = 0; i < 10; i++)
 	{
-		obj = malloc(sizeof(Object));
-		makeObj(obj);
+		obj = makeObj();
 		enqueue(queue, obj);
 	}
 	
 	for(int j = 0; j < 20; j++)
 	{
-		obj = malloc(sizeof(Object));
-		makeObj(obj);
+		obj = makeObj();
 		priorityEnqueue(queue, obj);
 	}
 	
 	dequeue(queue);
-	obj = malloc(sizeof(Object));
-	makeObj(obj);
+	obj = makeObj();
 	priorityEnqueue(queue, obj);
-	obj = malloc(sizeof(Object));
-	makeObj(obj);
+	obj = makeObj();
 	priorityEnqueue(queue, obj);
-	obj = malloc(sizeof(Object));
-	makeObj(obj);
+	obj = makeObj();
 	enqueue(queue, obj);
 	dequeue(queue);
 	
@@ -48,60 +43,44 @@ int main()
 	flushQueue(queue);
 	
 	dequeue(queue);
-	obj = malloc(sizeof(Object));
-	makeObj(obj);
+	obj = makeObj();
 	priorityEnqueue(queue, obj);
-	obj = malloc(sizeof(Object));
-	makeObj(obj);
+	obj = makeObj();
 	priorityEnqueue(queue, obj);
-	obj = malloc(sizeof(Object));
-	makeObj(obj);
+	obj = makeObj();
 	enqueue(queue, obj);
 	dequeue(queue);
 	
 	for(int j = 0; j < 20; j++)
 	{
-		obj = malloc(sizeof(Object));
-		makeObj(obj);
+		obj = makeObj();
 		priorityEnqueue(queue, obj);
 	}
 	
 	for(int i = 0; i < 10; i++)
 	{
-		obj = malloc(sizeof(Object));
-		makeObj(obj);
+		obj = makeObj();
 		enqueue(queue, obj);
 	}
 	
 	resetQueue(queue);
 	
-	obj = malloc(sizeof(Object));
-	makeObj(obj);
+	obj = makeObj();
 	priorityEnqueue(queue, obj);
-	obj = malloc(sizeof(Object));
-	makeObj(obj);
+	obj = makeObj();
 	enqueue(queue, obj);
 	dequeue(queue);
 	
 	for(int j = 0; j < 20; j++)
 	{
-		obj = malloc(sizeof(Object));
-		makeObj(obj);
+		obj = makeObj();
 		priorityEnqueue(queue, obj);
 	}
 	
 	for(int i = 0; i < 10; i++)
 	{
-		obj = malloc(sizeof(Object));
-		makeObj(obj);
+		obj = makeObj();
 		enqueue(queue, obj);
-	}
-	
-	cleanQueue(queue);
-	
-	for(int k = 0; k < 10; k++)
-	{
-		pullQueue(queue);
 	}
 	
 	cleanQueue(queue);
@@ -111,8 +90,9 @@ int main()
 }
 
 
-void makeObj(Object* obj)
+Object* makeObj(void)
 {
+	Object* obj = malloc(sizeof(Object));
 	initObj(obj);
 	obj->vvv_big_array = malloc(arr_sz * sizeof(int));
 	if(obj->vvv_big_array == NULL)
@@ -124,6 +104,9 @@ void makeObj(Object* obj)
 	{
 		obj->vvv_big_array[j] = j;
 	}
+	
+	return obj;
+	
 }
 
 
